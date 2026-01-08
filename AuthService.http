@@ -1,0 +1,44 @@
+### Register
+POST http://localhost:5049/graphql
+Content-Type: application/json
+
+{
+  "query": "mutation($input: RegisterInput!) { register(input: $input) { id username email isActive createdAt updatedAt } }",
+  "variables": { "input": { "username": "diptanshu gupta", "email": "dgupta@example.com", "password": "Pass@123" } }
+}
+
+### Login
+POST http://localhost:5049/graphql
+Content-Type: application/json
+
+{
+  "query": "mutation($input: LoginInput!) { login(input: $input) { accessToken refreshToken userId username email roles expiresAt } }",
+  "variables": { "input": { "usernameOrEmail": "dgupta@example.com", "password": "Pass@123", "deviceInfo": "Windows VSCode" } }
+}
+
+### Me (requires Authorization header)
+POST http://localhost:5049/graphql
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxIiwidW5pcXVlX25hbWUiOiJkaXB0YW5zaHUgZ3VwdGEiLCJlbWFpbCI6ImRndXB0YUBleGFtcGxlLmNvbSIsImlzX2FjdGl2ZSI6IlRydWUiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJ1c2VyIiwibmJmIjoxNzY3ODAxNDYxLCJleHAiOjE3Njc4MDUwNjEsImlzcyI6IlBpenphQXV0aCIsImF1ZCI6IlBpenphQXBpIn0._Ap_R0OHLSDrcbkzcEeVkb1vaN-FhxEAPVS0UMN5HTE
+
+{
+  "query": "query { me { id username email isActive createdAt updatedAt } }"
+}
+
+### Refresh
+POST http://localhost:5105/graphql
+Content-Type: application/json
+
+{
+  "query": "mutation($input: RefreshInput!) { refresh(input: $input) { accessToken refreshToken userId username email roles expiresAt } }",
+  "variables": { "input": { "token": "wfiJ63bBl0mSKHnDqAaZGQ" } }
+}
+
+### Revoke
+POST http://localhost:5105/graphql
+Content-Type: application/json
+
+{
+  "query": "mutation($input: RevokeInput!) { revoke(input: $input) }",
+  "variables": { "input": { "token": "wfiJ63bBl0mSKHnDqAaZGQ" } }
+}
